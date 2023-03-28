@@ -1,0 +1,9 @@
+@import 'src/style/themes/ucsf/colors';
+
+.popoverContentLink {
+  padding: 0;
+  &,
+  &:hover {
+    color: $gray-8;
+  }
+}

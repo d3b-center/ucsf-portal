@@ -1,0 +1,41 @@
+@import 'src/style/themes/ucsf/colors';
+
+.info {
+  color: $gray-7;
+}
+
+.dropdown {
+  background-color: $gray-7;
+  color: $gray-1;
+  border-color: $gray-7;
+
+  .ant-dropdown-open {
+    color: $gray-1;
+    background-color: $gray-7;
+  }
+
+  &:hover {
+    color: $gray-1;
+    background: $gray-6;
+    border-color: $gray-6;
+  }
+
+  &:focus {
+    color: $gray-1;
+    background: $gray-9;
+    border-color: $gray-9;
+  }
+
+  &:active {
+    color: $gray-1;
+    background: $gray-9;
+    border-color: $gray-9;
+  }
+
+  &:focus-visible {
+    color: $gray-1;
+    background: $gray-7;
+    border-color: $gray-7;
+    box-shadow: 0 0 0 2px $gray-1, 0 0 0 4px $gray-7;
+  }
+}

@@ -1,0 +1,27 @@
+@import 'src/style/themes/ucsf/colors';
+
+.headerLink {
+  .headerBtn {
+    border: none;
+    color: $gray-8;
+    padding: 4px 8px;
+    margin: 0 5px;
+    background-color: $gray-3;
+    
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
+      background-color: $gray-4;
+      border: none;
+      color: $gray-8;
+    }
+
+    &:focus-visible {
+      background-color: $gray-4;
+      border: 1px solid $gray-8;
+      color: $gray-8;
+      box-shadow: 0 0 0 2px $gray-1, 0 0 0 4px $gray-8;
+    }
+  }
+}

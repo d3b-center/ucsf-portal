@@ -1,0 +1,27 @@
+@import 'src/style/themes/ucsf/theme.template';
+@import 'src/style/themes/ucsf/layout';
+
+.dataExplorationLayout {
+  display: flex;
+  height: calc(100vh - #{$main-header-height});
+
+  .filterLoader {
+    padding: 24px;
+    width: 100%;
+  }
+
+  .sideMenu {
+    li[role='menuitem'] {
+      color: white;
+
+      span[class$='-title-content'] {
+        margin-left: 0 !important;
+      }
+    }
+  }
+
+  .scrollContent {
+    width: 100%;
+    padding: $default-page-content-padding;
+  }
+}

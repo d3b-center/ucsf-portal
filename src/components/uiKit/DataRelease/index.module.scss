@@ -1,0 +1,24 @@
+@import 'src/style/themes/ucsf/colors';
+@import 'src/style/themes/ucsf/layout';
+@import 'src/style/themes/ucsf/theme.template';
+
+.dataReleaseContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: $default-padding;
+
+  .dataReleaseIcon {
+    margin-top: -1px;
+    color: $blue-7;
+    font-size: $data-release-icon-font-size;
+  }
+
+  .dataReleaseStatsLabel {
+    color: $gray-1;
+
+    :global(.wrapper__label) {
+      font-size: 24px;
+      line-height: 24px;
+    }
+  }
+}
