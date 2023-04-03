@@ -44,13 +44,12 @@ export interface IParticipantStudy {
   study_name: string;
   status: string;
   investigator_id: string;
-  study_code: string;
+  study_id: string;
   participant_count: number;
   file_count: number;
   biospecimen_count: number;
   family_count: number;
   family_data: boolean;
-  study_id: string;
 }
 
 export interface IParticipantOutcomes {

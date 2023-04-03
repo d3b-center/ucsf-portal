@@ -1090,12 +1090,12 @@ const en = {
       biospecimen_fhir_id_2: 'Sample ID',
     },
     study: {
-      study_code: 'Study Code',
+      study_id: 'Study Code',
       study_name: 'Study Name',
       external_id: 'dbGaP Accession Number',
     },
     studies: {
-      study_code: 'Study Code',
+      study_id: 'Study Code',
     },
     is_proband: 'Proband',
     study_id: 'Study Code',

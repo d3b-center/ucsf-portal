@@ -55,13 +55,13 @@ const getDefaultColumns = (): ProColumnType[] => [
     sorter: { multiple: 1 },
   },
   {
-    key: 'study.study_code',
+    key: 'study.study_id',
     title: 'Study',
     sorter: {
       multiple: 1,
     },
     dataIndex: 'study',
-    render: (study: IFileStudyEntity) => study.study_code || TABLE_EMPTY_PLACE_HOLDER,
+    render: (study: IFileStudyEntity) => study.study_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'data_category',

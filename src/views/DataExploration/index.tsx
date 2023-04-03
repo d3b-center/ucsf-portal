@@ -46,7 +46,7 @@ const filterGroups: {
   [FilterTypes.Study]: {
     groups: [
       {
-        facets: ['study__study_name', 'study__study_code', 'study__program', 'study__external_id'],
+        facets: ['study__study_name', 'study__study_id', 'study__program', 'study__external_id'],
       },
     ],
   },

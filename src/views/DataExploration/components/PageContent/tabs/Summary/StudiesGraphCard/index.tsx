@@ -26,7 +26,7 @@ interface OwnProps {
 }
 
 const transformData = (results: TRawAggregation) =>
-  (results?.data?.participant?.aggregations?.study__study_code.buckets || []).map(toChartData);
+  (results?.data?.participant?.aggregations?.study__study_id.buckets || []).map(toChartData);
 
 const graphSetting = {
   height: 175,
@@ -83,7 +83,7 @@ const StudiesGraphCard = ({ id, className = '' }: OwnProps) => {
             ) : (
               <PieChart
                 data={data}
-                onClick={(datum) => addToQuery('study.study_code', datum.id as string)}
+                onClick={(datum) => addToQuery('study.study_id', datum.id as string)}
                 tooltip={(value) => (
                   <BasicTooltip
                     id={value.datum.id.toString()}

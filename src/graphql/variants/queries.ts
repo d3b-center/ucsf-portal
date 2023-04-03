@@ -49,7 +49,6 @@ export const SEARCH_VARIANT_QUERY = gql`
                     score
                     participant_ids
                     participant_number
-                    study_code
                     study_id
                     acls
                     external_study_ids
@@ -269,7 +268,7 @@ export const GET_VARIANT_ENTITY = gql`
                     participant_ids
                     participant_number
                     study_id
-                    study_code
+                    study_id
                     frequencies {
                       upper_bound_kf {
                         ac

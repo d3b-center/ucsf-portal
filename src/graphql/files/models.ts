@@ -9,9 +9,8 @@ export interface IFileResultTree {
 
 export interface IFileStudyEntity {
   id: string;
-  study_id: string;
   fhir_id: string;
-  study_code: string;
+  study_id: string;
   study_name: string;
   external_id: string;
   experimental_strategy: string[];

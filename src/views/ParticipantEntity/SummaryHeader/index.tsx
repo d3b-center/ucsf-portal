@@ -30,8 +30,8 @@ const SummaryHeader = ({ data }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: 'study.study_code',
-                  value: data ? [data.study.study_code] : [],
+                  field: 'study.study_id',
+                  value: data ? [data.study.study_id] : [],
                   index: INDEXES.VARIANTS,
                 }),
               ],

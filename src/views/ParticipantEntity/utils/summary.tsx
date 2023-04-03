@@ -17,7 +17,7 @@ import styles from '../index.module.scss';
 
 export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescriptionsItem[] => {
   const diagnosis = hydrateResults(participant?.diagnosis?.hits?.edges || []);
-  const pedcBioportal = mapStudyToPedcBioportal(participant?.study?.study_code || '');
+  const pedcBioportal = mapStudyToPedcBioportal(participant?.study?.study_id || '');
 
   return [
     {
@@ -41,15 +41,15 @@ export const getSummaryItems = (participant?: IParticipantEntity): IEntityDescri
     {
       label: intl.get('screen.participantEntity.summary.study'),
       value: participant?.study.study_name
-        ? `${participant?.study.study_name} (${participant?.study.study_code})`
+        ? `${participant?.study.study_name} (${participant?.study.study_id})`
         : TABLE_EMPTY_PLACE_HOLDER,
       // @TODO: should be used when study page is done
       // value: participant?.study.study_name ? (
       //   <Link
       //     className={underlineLinkStyles.underlineLink}
-      //     to={`${DYNAMIC_ROUTES.STUDY_ENTITY}/${participant?.study.study_code}`}
+      //     to={`${DYNAMIC_ROUTES.STUDY_ENTITY}/${participant?.study.study_id}`}
       //   >
-      //     {participant?.study.study_name} ({participant?.study.study_code})
+      //     {participant?.study.study_name} ({participant?.study.study_id})
       //   </Link>
       // ) : (
       //   TABLE_EMPTY_PLACE_HOLDER

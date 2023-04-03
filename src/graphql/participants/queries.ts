@@ -24,7 +24,7 @@ export const SEARCH_PARTICIPANT_QUERY = gql`
               }
             }
             study {
-              study_code
+              study_id
               study_id
               study_name
             }
@@ -110,7 +110,7 @@ export const GET_PARTICIPANT_ENTITY = gql`
             family_type
             race
             study {
-              study_code
+              study_id
               study_id
               study_name
             }

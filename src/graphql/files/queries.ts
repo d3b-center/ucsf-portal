@@ -30,7 +30,6 @@ export const SEARCH_FILES_QUERY = gql`
             study {
               study_id
               study_name
-              study_code
             }
             sequencing_experiment {
               hits {
@@ -90,7 +89,7 @@ export const GET_FILE_ENTITY = gql`
                     is_proband
                     participant_id
                     study {
-                      study_code
+                      study_id
                       external_id
                     }
                   }
@@ -117,7 +116,7 @@ export const GET_FILE_ENTITY = gql`
             size
             study {
               study_name
-              study_code
+              study_id
             }
           }
         }

@@ -16,7 +16,7 @@ const StudySearch = ({ queryBuilderId }: ICustomSearchProps) => {
   return (
     <GlobalSearch<IStudiesEntity>
       queryBuilderId={queryBuilderId}
-      field="study_code"
+      field="study_id"
       tooltipText={intl.getHTML('global.search.study.tooltip')}
       index={INDEXES.STUDIES}
       placeholder={intl.get(`global.search.study.placeholder`)}
@@ -28,11 +28,11 @@ const StudySearch = ({ queryBuilderId }: ICustomSearchProps) => {
           label: (
             <SelectItem
               icon={<ReadOutlined />}
-              title={highlightSearchMatch(option.study_code, matchRegex, search)}
+              title={highlightSearchMatch(option.study_id, matchRegex, search)}
               caption={highlightSearchMatch(option.study_name, matchRegex, search)}
             />
           ),
-          value: option.study_code,
+          value: option.study_id,
         }))
       }
       title={intl.get(`global.search.study.title`)}

@@ -44,7 +44,7 @@ export const PARTICIPANT_BY_STUDIES_QUERY = `
   query($sqon: JSON) {
     participant {
       aggregations(filters: $sqon, aggregations_filter_themselves: true, include_missing: false) {
-        study__study_code {
+        study__study_id {
           buckets {
             key
             doc_count

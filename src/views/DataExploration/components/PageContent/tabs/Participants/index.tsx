@@ -73,14 +73,14 @@ const defaultColumns: ProColumnType[] = [
     },
   },
   {
-    key: 'study.study_code',
+    key: 'study.study_id',
     title: 'Study',
     sorter: {
       multiple: 1,
     },
     dataIndex: 'study',
     className: styles.studyIdCell,
-    render: (study: IParticipantStudy) => study.study_code || TABLE_EMPTY_PLACE_HOLDER,
+    render: (study: IParticipantStudy) => study.study_id || TABLE_EMPTY_PLACE_HOLDER,
   },
   {
     key: 'study_external_id',
@@ -217,7 +217,7 @@ const defaultColumns: ProColumnType[] = [
       multiple: 1,
     },
     render: (record: ITableParticipantEntity) => {
-      const studyId = mapStudyToPedcBioportal(record.study?.study_code);
+      const studyId = mapStudyToPedcBioportal(record.study?.study_id);
 
       if (!studyId) {
         return TABLE_EMPTY_PLACE_HOLDER;

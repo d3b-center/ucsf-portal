@@ -9,7 +9,7 @@ export const SEARCH_STUDIES_QUERY = gql`
           node {
             id
             study_id
-            study_code
+            study_id
             study_name
             program
             external_id
@@ -33,7 +33,7 @@ export const SEARCH_STUDIES_BY_ID_AND_NAME_QUERY = gql`
         edges {
           node {
             study_id
-            study_code
+            study_id
             study_name
             external_id
           }

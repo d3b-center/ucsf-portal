@@ -33,7 +33,7 @@ const SummaryHeader = ({ variant }: OwnProps) => {
             query: generateQuery({
               newFilters: [
                 generateValueFilter({
-                  field: 'study.study_code',
+                  field: 'study.study_id',
                   value: variant ? [] : [],
                   index: INDEXES.VARIANTS,
                 }),

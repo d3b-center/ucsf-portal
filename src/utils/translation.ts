@@ -245,11 +245,11 @@ export const getQueryBuilderDictionary = (
 export const getFacetsDictionary = () => ({
   study: {
     study_name: 'Study Name',
-    study_code: 'Study Code',
+    study_id: 'Study Code',
     external_id: 'dbGaP Accession Number',
   },
   studies: {
-    study_code: 'Study Code',
+    study_id: 'Study Code',
   },
   start: 'Position',
   acl: 'ACL',

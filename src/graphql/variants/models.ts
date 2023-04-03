@@ -187,7 +187,6 @@ export interface IVariantStudyEntity {
   participant_ids: string[];
   participant_number: number;
   score: number | null;
-  study_code: string;
   study_id: string;
   transmissions: string[];
 }
