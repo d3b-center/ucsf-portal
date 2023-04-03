@@ -25,9 +25,6 @@ import Login from 'views/Login';
 import ParticipantEntity from 'views/ParticipantEntity';
 
 import { LANG } from 'common/constants';
-import { FENCE_NAMES } from 'common/fenceTypes';
-import MainSideImage from 'components/assets/mainSideImage.jpg';
-import MainSideImageAlt from 'components/assets/mainSideImage-alt.jpg';
 import ErrorBoundary from 'components/ErrorBoundary';
 import PageLayout from 'components/Layout';
 import SideImageLayout from 'components/Layout/SideImage';
@@ -71,7 +68,7 @@ const App = () => {
                 <Switch>
                   <Route exact path={STATIC_ROUTES.LOGIN}>
                     <GradientAccent isFixed />
-                    <SideImageLayout sideImgSrc={MainSideImage}>
+                    <SideImageLayout>
                       <Login />
                     </SideImageLayout>
                   </Route>

@@ -1,10 +1,10 @@
 import { ReactElement } from 'react';
-import EnvVariables from 'helpers/EnvVariables';
-import cx from 'classnames';
 import { Row } from 'antd';
+import cx from 'classnames';
+import EnvVariables from 'helpers/EnvVariables';
 
-import style from 'components/Layout/SideImage/index.module.scss';
 import { Theme } from 'common/theme';
+import style from 'components/Layout/SideImage/index.module.scss';
 
 interface OwnProps {
   alt?: boolean;
@@ -18,7 +18,6 @@ interface OwnProps {
 const SideImageLayout = ({
   alt = false,
   logoSrc,
-  sideImgSrc,
   alignCenter = true,
   theme = Theme.DARK,
   children,
@@ -30,14 +29,6 @@ const SideImageLayout = ({
       </a>
     )}
     <Row className={style.contentWrapper}>
-      <div
-        className={style.sideImageContainer}
-        style={{
-          backgroundImage: `url(${sideImgSrc})`,
-          backgroundPosition: 'center',
-          backgroundSize: 'cover',
-        }}
-      />
       <Row
         className={cx(
           style.pageContent,
