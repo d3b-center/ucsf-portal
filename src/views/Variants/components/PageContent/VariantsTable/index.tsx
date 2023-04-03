@@ -66,6 +66,14 @@ const defaultColumns: ProColumnType[] = [
     sorter: {
       multiple: 1,
     },
+    render: (hgvsg: string, entity: IVariantEntity) =>
+      hgvsg ? (
+        <Tooltip placement="topLeft" title={hgvsg}>
+          <Link to={`${STATIC_ROUTES.VARIANTS}/${entity.locus}`}>{hgvsg}</Link>
+        </Tooltip>
+      ) : (
+        TABLE_EMPTY_PLACE_HOLDER
+      ),
   },
   {
     key: 'variant_class',
