@@ -37,33 +37,33 @@ const SummaryTab = () => {
       items={orderCardIfNeeded(
         [
           // Observed Phenotypes (HPO)
-          // {
-          //   id: '1',
-          //   lg: 24,
-          //   xl: 12,
-          //   className: styles.summaryGraphCardCol,
-          //   component: (
-          //     <SunburstGraphCard
-          //       id="1"
-          //       className={cx(styles.summaryGrapCard, styles.sunburstGraphCard)}
-          //       field={'observed_phenotype'}
-          //     />
-          //   ),
-          // },
+          {
+            id: '1',
+            lg: 24,
+            xl: 12,
+            className: styles.summaryGraphCardCol,
+            component: (
+              <SunburstGraphCard
+                id="1"
+                className={cx(styles.summaryGrapCard, styles.sunburstGraphCard)}
+                field={'observed_phenotype'}
+              />
+            ),
+          },
           // Diagnosis (MONDO)
-          // {
-          //   id: '2',
-          //   lg: 24,
-          //   xl: 12,
-          //   className: styles.summaryGraphCardCol,
-          //   component: (
-          //     <SunburstGraphCard
-          //       id="2"
-          //       className={cx(styles.summaryGrapCard, styles.sunburstGraphCard)}
-          //       field={'mondo'}
-          //     />
-          //   ),
-          // },
+          {
+            id: '2',
+            lg: 24,
+            xl: 12,
+            className: styles.summaryGraphCardCol,
+            component: (
+              <SunburstGraphCard
+                id="2"
+                className={cx(styles.summaryGrapCard, styles.sunburstGraphCard)}
+                field={'mondo'}
+              />
+            ),
+          },
           // Demographics
           {
             id: '3',
