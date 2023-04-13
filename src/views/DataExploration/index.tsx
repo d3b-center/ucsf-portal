@@ -58,7 +58,7 @@ const filterGroups: {
     ],
     groups: [
       {
-        facets: ['is_proband', 'ethnicity', 'sex', 'race'],
+        facets: ['is_proband', 'ethnicity', 'sex', 'race', 'diagnosis__source_text'],
       },
     ],
   },
