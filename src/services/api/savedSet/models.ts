@@ -29,6 +29,6 @@ export type TUserSavedSetUpdate = Partial<ISavedSet> & { subAction: string; newT
 export enum SetType {
   PARTICIPANT = 'participant',
   FILES = 'files',
-  BIOSPECIMEN = 'biospecimen',
+  BIOSPECIMEN = 'biospecimens',
   VARIANT = 'variants',
 }

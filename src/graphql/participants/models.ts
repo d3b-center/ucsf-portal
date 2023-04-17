@@ -44,12 +44,12 @@ export interface IParticipantStudy {
   study_name: string;
   status: string;
   investigator_id: string;
-  study_id: string;
   participant_count: number;
   file_count: number;
   biospecimen_count: number;
   family_count: number;
   family_data: boolean;
+  study_id: string;
 }
 
 export interface IParticipantOutcomes {
@@ -117,12 +117,12 @@ export interface IUseParticipantEntityProps {
   values: string[];
 }
 
-export interface IUseParticipantEntityReturn {
+export interface IUseParticipantEntityResults {
   loading: boolean;
   data?: IParticipantEntity;
 }
 
-export interface IUseParticipantEntityFamilyReturn {
+export interface IUseParticipantEntityFamilyResults {
   loading: boolean;
   data?: IParticipantEntity[];
 }

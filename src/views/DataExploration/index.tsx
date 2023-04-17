@@ -1,6 +1,12 @@
 import intl from 'react-intl-universal';
 import { useParams } from 'react-router-dom';
-import { FileSearchOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  ExperimentOutlined,
+  FileSearchOutlined,
+  MedicineBoxOutlined,
+  ReadOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import SidebarMenu, { ISidebarMenuItem } from '@ferlab/ui/core/components/SidebarMenu';
 import ScrollContent from '@ferlab/ui/core/layout/ScrollContent';
 import { INDEXES } from 'graphql/constants';
@@ -16,9 +22,13 @@ import FilterList from 'components/uiKit/FilterList';
 import { FilterInfo } from 'components/uiKit/FilterList/types';
 import useGetExtendedMappings from 'hooks/graphql/useGetExtendedMappings';
 import { RemoteComponentList } from 'store/remote/types';
-import { mapFilterForFiles, mapFilterForParticipant } from 'utils/fieldMapper';
+import {
+  mapFilterForBiospecimen,
+  mapFilterForFiles,
+  mapFilterForParticipant,
+} from 'utils/fieldMapper';
 
-import { BiospecimenCollectionSearch, BiospecimenSearch } from './components/BiospecimenSearch';
+import { BiospecimenSearch } from './components/BiospecimenSearch';
 import BiospecimenSetSearch from './components/BiospecimenSetSearch';
 import FileSearch from './components/FileSearch';
 import FileSetSearch from './components/FileSetSearch';
@@ -58,7 +68,7 @@ const filterGroups: {
     ],
     groups: [
       {
-        facets: ['is_proband', 'ethnicity', 'sex', 'race', 'diagnosis__source_text'],
+        facets: ['is_proband', 'ethnicity', 'sex', 'race'],
       },
     ],
   },
@@ -71,6 +81,7 @@ const filterGroups: {
           'outcomes__age_at_event_days__value',
           'phenotype__age_at_event_days',
           <TreeFacet
+            key="mondo-tree"
             type={RemoteComponentList.MondoTree}
             field={'mondo'}
             titleFormatter={formatMondoTitleAndCode}
@@ -78,6 +89,7 @@ const filterGroups: {
           'diagnosis__ncit_id_diagnosis',
           'diagnosis__source_text',
           <TreeFacet
+            key="observed-phoenotype-tree"
             type={RemoteComponentList.HPOTree}
             field={'observed_phenotype'}
             titleFormatter={formatHpoTitleAndCode}
@@ -92,14 +104,19 @@ const filterGroups: {
   [FilterTypes.Biospecimen]: {
     customSearches: [
       <BiospecimenSearch key={0} queryBuilderId={DATA_EXPLORATION_QB_ID} />,
-      <BiospecimenCollectionSearch key={1} queryBuilderId={DATA_EXPLORATION_QB_ID} />,
+      // <BiospecimenCollectionSearch key={1} queryBuilderId={DATA_EXPLORATION_QB_ID} />,
       <BiospecimenSetSearch key={2} queryBuilderId={DATA_EXPLORATION_QB_ID} />,
       <BiospecimenUploadIds key={3} queryBuilderId={DATA_EXPLORATION_QB_ID} />,
     ],
     groups: [
       {
         facets: [
-          'sample_type', // Incorrect: just a placeholder
+          'sample_type',
+          'consent_type',
+          'participant__diagnosis__mondo_id_diagnosis',
+          'participant__diagnosis__ncit_id_diagnosis',
+          'method_of_sample_procurement',
+          'ncit_id_tissue_type',
         ],
       },
     ],
@@ -131,7 +148,7 @@ const DataExploration = () => {
   const { tab } = useParams<{ tab: string }>();
   const participantMappingResults = useGetExtendedMappings(INDEXES.PARTICIPANT);
   const fileMappingResults = useGetExtendedMappings(INDEXES.FILES);
-  //FIXME const biospecimenMappingResults = useGetExtendedMappings(INDEXES.BIOSPECIMEN);
+  const biospecimenMappingResults = useGetExtendedMappings(INDEXES.BIOSPECIMENS);
 
   const menuItems: ISidebarMenuItem[] = [
     {
@@ -146,6 +163,36 @@ const DataExploration = () => {
           extendedMappingResults={participantMappingResults}
           filterInfo={filterGroups[FilterTypes.Participant]}
           filterMapper={mapFilterForParticipant}
+        />
+      ),
+    },
+    {
+      key: 'clinical',
+      title: intl.get('screen.dataExploration.sidemenu.clinical'),
+      icon: <MedicineBoxOutlined />,
+      panelContent: (
+        <FilterList
+          key={INDEXES.CLINICAL}
+          index={INDEXES.PARTICIPANT}
+          queryBuilderId={DATA_EXPLORATION_QB_ID}
+          extendedMappingResults={participantMappingResults}
+          filterInfo={filterGroups[FilterTypes.Clinical]}
+          filterMapper={mapFilterForParticipant}
+        />
+      ),
+    },
+    {
+      key: TAB_IDS.BIOSPECIMENS,
+      title: intl.get('screen.dataExploration.sidemenu.biospecimen'),
+      icon: <ExperimentOutlined />,
+      panelContent: (
+        <FilterList
+          key={INDEXES.BIOSPECIMENS}
+          index={INDEXES.BIOSPECIMENS}
+          queryBuilderId={DATA_EXPLORATION_QB_ID}
+          extendedMappingResults={biospecimenMappingResults}
+          filterInfo={filterGroups[FilterTypes.Biospecimen]}
+          filterMapper={mapFilterForBiospecimen}
         />
       ),
     },
@@ -187,7 +234,7 @@ const DataExploration = () => {
       <ScrollContent id={SCROLL_WRAPPER_ID} className={styles.scrollContent}>
         <PageContent
           fileMapping={fileMappingResults}
-          //TODO biospecimenMapping={biospecimenMappingResults}
+          biospecimenMapping={biospecimenMappingResults}
           participantMapping={participantMappingResults}
           tabId={tab}
         />

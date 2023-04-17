@@ -115,6 +115,23 @@ const SavedSets = ({ id, key, className = '' }: DashboardCardProps) => {
           <TabPane
             tab={
               <div>
+                <ExperimentOutlined />
+                Biospecimen ({savedSets.filter((s) => s.setType === SetType.BIOSPECIMEN).length})
+              </div>
+            }
+            key="biospecimen"
+          >
+            {getItemList(
+              SetType.BIOSPECIMEN,
+              savedSets,
+              fetchingError,
+              isLoading,
+              <ExperimentOutlined />,
+            )}
+          </TabPane>
+          <TabPane
+            tab={
+              <div>
                 <FileTextOutlined />
                 {intl.get('screen.dashboard.cards.savedSets.tabs.files')} (
                 {savedSets.filter((s) => s.setType === SetType.FILES).length})

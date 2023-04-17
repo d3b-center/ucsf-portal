@@ -5,21 +5,20 @@ import { DownloadOutlined } from '@ant-design/icons';
 import ColorTag, { ColorTagType } from '@ferlab/ui/core/components/ColorTag';
 import ExternalLink from '@ferlab/ui/core/components/ExternalLink';
 import ProTable from '@ferlab/ui/core/components/ProTable';
+import { PaginationViewPerQuery } from '@ferlab/ui/core/components/ProTable/Pagination/constants';
 import { ProColumnType } from '@ferlab/ui/core/components/ProTable/types';
+import { resetSearchAfterQueryConfig, tieBreaker } from '@ferlab/ui/core/components/ProTable/utils';
 import useQueryBuilderState, {
   addQuery,
 } from '@ferlab/ui/core/components/QueryBuilder/utils/useQueryBuilderState';
 import ExpandableCell from '@ferlab/ui/core/components/tables/ExpandableCell';
 import { ISqonGroupFilter } from '@ferlab/ui/core/data/sqon/types';
 import { generateQuery, generateValueFilter } from '@ferlab/ui/core/data/sqon/utils';
-import {
-  IArrangerResultsTree,
-  IQueryConfig,
-  IQueryResults,
-  TQueryConfigCb,
-} from '@ferlab/ui/core/graphql/types';
-import { Button, Dropdown, Menu, Tag, Tooltip } from 'antd';
+import { SortDirection } from '@ferlab/ui/core/graphql/constants';
+import { IArrangerResultsTree } from '@ferlab/ui/core/graphql/types';
+import { Button, Dropdown, Menu, Tooltip } from 'antd';
 import { INDEXES } from 'graphql/constants';
+import { useParticipants } from 'graphql/participants/actions';
 import {
   IParticipantDiagnosis,
   IParticipantEntity,
@@ -33,7 +32,11 @@ import { capitalize } from 'lodash';
 import SetsManagementDropdown from 'views/DataExploration/components/SetsManagementDropdown';
 import {
   DATA_EXPLORATION_QB_ID,
+  DEFAULT_OFFSET,
+  DEFAULT_PAGE_INDEX,
   DEFAULT_PAGE_SIZE,
+  DEFAULT_PARTICIPANT_QUERY_SORT,
+  DEFAULT_QUERY_CONFIG,
   PARTICIPANTS_SAVED_SETS_FIELD,
   SCROLL_WRAPPER_ID,
 } from 'views/DataExploration/utils/constant';
@@ -43,7 +46,7 @@ import {
 } from 'views/DataExploration/utils/helper';
 import { mapStudyToPedcBioportal } from 'views/Studies/utils/helper';
 
-import { SEX, TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
+import { TABLE_EMPTY_PLACE_HOLDER } from 'common/constants';
 import { ReportType } from 'services/api/reports/models';
 import { SetType } from 'services/api/savedSet/models';
 import { fetchReport, fetchTsvReport } from 'store/report/thunks';
@@ -57,9 +60,6 @@ import { getProTableDictionary } from 'utils/translation';
 import styles from './index.module.scss';
 
 interface OwnProps {
-  results: IQueryResults<IParticipantEntity[]>;
-  setQueryConfig: TQueryConfigCb;
-  queryConfig: IQueryConfig;
   sqon?: ISqonGroupFilter;
 }
 
@@ -436,21 +436,35 @@ const defaultColumns: ProColumnType[] = [
   },
 ];
 
-const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProps) => {
+const ParticipantsTab = ({ sqon }: OwnProps) => {
   const dispatch = useDispatch();
   const { userInfo } = useUser();
+  const [pageIndex, setPageIndex] = useState(DEFAULT_PAGE_INDEX);
   const { activeQuery } = useQueryBuilderState(DATA_EXPLORATION_QB_ID);
   const [selectedAllResults, setSelectedAllResults] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [selectedRows, setSelectedRows] = useState<IParticipantEntity[]>([]);
-
-  useEffect(() => {
-    if (selectedKeys.length) {
-      setSelectedKeys([]);
-      setSelectedRows([]);
-    }
-    // eslint-disable-next-line
-  }, [JSON.stringify(activeQuery)]);
+  const [queryConfig, setQueryConfig] = useState({
+    ...DEFAULT_QUERY_CONFIG,
+    sort: DEFAULT_PARTICIPANT_QUERY_SORT,
+    size:
+      userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery || DEFAULT_PAGE_SIZE,
+  });
+  const results = useParticipants(
+    {
+      first: queryConfig.size,
+      offset: DEFAULT_OFFSET,
+      searchAfter: queryConfig.searchAfter,
+      sqon,
+      sort: tieBreaker({
+        sort: queryConfig.sort,
+        defaultSort: DEFAULT_PARTICIPANT_QUERY_SORT,
+        field: 'participant_id',
+        order: queryConfig.operations?.previous ? SortDirection.Desc : SortDirection.Asc,
+      }),
+    },
+    queryConfig.operations,
+  );
 
   const getCurrentSqon = (): any =>
     selectedAllResults || !selectedKeys.length
@@ -490,6 +504,36 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
     />
   );
 
+  useEffect(() => {
+    if (selectedKeys.length) {
+      setSelectedKeys([]);
+      setSelectedRows([]);
+    }
+    resetSearchAfterQueryConfig(
+      {
+        ...DEFAULT_QUERY_CONFIG,
+        sort: DEFAULT_PARTICIPANT_QUERY_SORT,
+        size:
+          userInfo?.config?.data_exploration?.tables?.participants?.viewPerQuery ||
+          DEFAULT_PAGE_SIZE,
+      },
+      setQueryConfig,
+    );
+    setPageIndex(DEFAULT_PAGE_INDEX);
+    // eslint-disable-next-line
+  }, [JSON.stringify(activeQuery)]);
+
+  useEffect(() => {
+    if (queryConfig.firstPageFlag !== undefined || queryConfig.searchAfter === undefined) {
+      return;
+    }
+
+    setQueryConfig({
+      ...queryConfig,
+      firstPageFlag: queryConfig.searchAfter,
+    });
+  }, [queryConfig]);
+
   return (
     <ProTable<ITableParticipantEntity>
       tableId="participants_table"
@@ -500,16 +544,17 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
       enableRowSelection={true}
       initialSelectedKey={selectedKeys}
       showSorterTooltip={false}
-      onChange={({ current, pageSize }, _, sorter) =>
+      onChange={(_pagination, _filter, sorter) => {
+        setPageIndex(DEFAULT_PAGE_INDEX);
         setQueryConfig({
-          pageIndex: current!,
-          size: pageSize!,
+          pageIndex: DEFAULT_PAGE_INDEX,
+          size: queryConfig.size!,
           sort: formatQuerySortList(sorter),
-        })
-      }
+        });
+      }}
       headerConfig={{
         itemCount: {
-          pageIndex: queryConfig.pageIndex,
+          pageIndex: pageIndex,
           pageSize: queryConfig.size,
           total: results.total,
         },
@@ -556,11 +601,29 @@ const ParticipantsTab = ({ results, setQueryConfig, queryConfig, sqon }: OwnProp
       bordered
       size="small"
       pagination={{
-        current: queryConfig.pageIndex,
-        pageSize: queryConfig.size,
-        defaultPageSize: DEFAULT_PAGE_SIZE,
-        total: results.total,
-        onChange: () => scrollToTop(SCROLL_WRAPPER_ID),
+        current: pageIndex,
+        queryConfig,
+        setQueryConfig,
+        onChange: (page: number) => {
+          scrollToTop(SCROLL_WRAPPER_ID);
+          setPageIndex(page);
+        },
+        searchAfter: results.searchAfter,
+        onViewQueryChange: (viewPerQuery: PaginationViewPerQuery) => {
+          dispatch(
+            updateUserConfig({
+              data_exploration: {
+                tables: {
+                  participants: {
+                    ...userInfo?.config.data_exploration?.tables?.participants,
+                    viewPerQuery,
+                  },
+                },
+              },
+            }),
+          );
+        },
+        defaultViewPerQuery: queryConfig.size,
       }}
       dataSource={results.data.map((i) => ({ ...i, key: i.participant_id }))}
       dictionary={getProTableDictionary()}

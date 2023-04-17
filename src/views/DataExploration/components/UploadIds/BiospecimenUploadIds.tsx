@@ -54,7 +54,7 @@ const BiospecimenUploadIds = ({ queryBuilderId }: OwnProps) => (
     onUpload={(match) =>
       updateActiveQueryField({
         queryBuilderId,
-        field: 'biospecimen_facet_ids.biospecimen_fhir_id_2',
+        field: 'biospecimens_facet_ids.biospecimens_fhir_id_2',
         value: match.map((value) => value.key),
         index: INDEXES.BIOSPECIMENS,
         overrideValuesName: intl.get('components.uploadIds.modal.pillTitle'),

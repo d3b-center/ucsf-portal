@@ -1,12 +1,12 @@
 import { useSelector } from 'react-redux';
 import { singularizeSetTypeIfNeeded } from 'views/DataExploration/components/SetsManagementDropdown';
+import { VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
 
 import { SetType } from 'services/api/savedSet/models';
 
 import EnvironmentVariables from '../../helpers/EnvVariables';
 
 import { savedSetSelector } from './selector';
-import { VARIANT_SAVED_SETS_FIELD } from 'views/Variants/utils/constants';
 
 export type { initialState as SavedSetInitialState } from './types';
 export { default, SavedSetState } from './slice';
@@ -17,7 +17,7 @@ export const getSetFieldId = (type: SetType) => {
     return VARIANT_SAVED_SETS_FIELD;
   }
 
-  if (type === SetType.FILES) {
+  if (type === SetType.FILES || type === SetType.BIOSPECIMEN) {
     return `${singularizeSetTypeIfNeeded(type)}_facet_ids.${singularizeSetTypeIfNeeded(
       type,
     )}_fhir_id_1`;

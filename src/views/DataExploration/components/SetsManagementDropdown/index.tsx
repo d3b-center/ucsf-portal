@@ -95,7 +95,9 @@ export const itemIcon = (type: string) => {
 };
 
 export const singularizeSetTypeIfNeeded = (type: string) =>
-  type === SetType.FILES || type === SetType.VARIANT ? type.slice(0, -1) : type;
+  type === SetType.FILES || type === SetType.VARIANT || type === SetType.BIOSPECIMEN
+    ? type.slice(0, -1)
+    : type;
 
 const menu = (
   count: number,
