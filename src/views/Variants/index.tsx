@@ -44,7 +44,7 @@ const filterGroups: {
     groups: [
       {
         facets: [
-          'studies__study_id',
+          'studies__study_code',
         ],
       },
     ],
