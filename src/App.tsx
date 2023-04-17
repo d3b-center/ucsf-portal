@@ -25,6 +25,7 @@ import Login from 'views/Login';
 import ParticipantEntity from 'views/ParticipantEntity';
 
 import { LANG } from 'common/constants';
+import MainSideImage from 'components/assets/mainSideImage.jpg';
 import ErrorBoundary from 'components/ErrorBoundary';
 import PageLayout from 'components/Layout';
 import SideImageLayout from 'components/Layout/SideImage';
@@ -68,7 +69,7 @@ const App = () => {
                 <Switch>
                   <Route exact path={STATIC_ROUTES.LOGIN}>
                     <GradientAccent isFixed />
-                    <SideImageLayout>
+                    <SideImageLayout sideImgSrc={MainSideImage}>
                       <Login />
                     </SideImageLayout>
                   </Route>

@@ -18,6 +18,7 @@ interface OwnProps {
 const SideImageLayout = ({
   alt = false,
   logoSrc,
+  sideImgSrc,
   alignCenter = true,
   theme = Theme.DARK,
   children,
@@ -29,6 +30,14 @@ const SideImageLayout = ({
       </a>
     )}
     <Row className={style.contentWrapper}>
+      <div
+        className={style.sideImageContainer}
+        style={{
+          backgroundImage: `url(${sideImgSrc})`,
+          backgroundPosition: 'center',
+          backgroundSize: 'cover',
+        }}
+      />
       <Row
         className={cx(
           style.pageContent,

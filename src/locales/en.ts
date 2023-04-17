@@ -503,15 +503,15 @@ const en = {
       settingsPage: 'settings page',
     },
     loginPage: {
-      title: 'UCSF Data Resource Portal',
+      title: 'Genomics Data Portal',
       datarelease: {
         title: 'Available Data',
       },
       accelerating:
         'Accelerating UCSF research and promoting discoveries of new health insights underlying precision medicine, to improve patient and health care.',
       accessLargeScale:
-        'Access large-scale data resources and explore custom built cohort datasets based on participant, biospecimen, clinical and omics data.',
-      login: 'Login',
+        'Access to de-identified germline and clinical data that can empower your research, promote discoveries, and improve patient care.',
+      login: 'LOG IN',
       signup: 'Sign up',
     },
     dashboard: {
