@@ -127,6 +127,7 @@ export default class OntologyTree {
       // start from root and then look for each element inhereting from that node
       if (
         sourcePhenotype.key === 'disease or disorder (MONDO:0000001)' ||
+        sourcePhenotype.key === 'Phenotypic abnormality (HP:0000118)' ||
         workingPhenotypes.length === 1
       ) {
         const children = this.populateNodeChild({

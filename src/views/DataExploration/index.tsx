@@ -113,8 +113,6 @@ const filterGroups: {
         facets: [
           'sample_type',
           'consent_type',
-          'participant__diagnosis__mondo_id_diagnosis',
-          'participant__diagnosis__ncit_id_diagnosis',
           'method_of_sample_procurement',
           'ncit_id_tissue_type',
         ],
@@ -135,9 +133,6 @@ const filterGroups: {
           'sequencing_experiment__experiment_strategy',
           'file_format',
           'is_harmonized',
-          'repository',
-          'controlled_access',
-          'acl',
         ],
       },
     ],
